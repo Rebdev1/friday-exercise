@@ -42,15 +42,15 @@ class WebServiceController extends AbstractController
     }
 
     #[Route('/web/service/ZWSSTOCK', name: 'app_web_service_ZWSSTOCK')]
-    public function ZWSSTOCK(WebServiceEngine $webServiceEngine): Response
+    public function ZWSSTOCK(WebServiceEngine $webServiceEngine, Request $request): Response
     {
         $webServiceName         = 'ZWSSTOCK';
         $webServiceRequestParam = [
             "PARAM_IN" => [
-                "I_STOFCY" => 'FR011',
-                "I_ITMREF" => '',
-                "I_LOT"    => '',
-                "I_LOC"    => ''
+                "I_STOFCY" => $request->query->has('I_STOFCY') ? $request->query->get('I_STOFCY') : "FR011",
+                "I_ITMREF" => $request->query->has('I_ITMREF') ? $request->query->get('I_ITMREF') : '',
+                "I_LOT"    => $request->query->has('I_LOT') ? $request->query->get('I_LOT') : '',
+                "I_LOC"    => $request->query->has('I_LOC') ? $request->query->get('I_LOC') : '',
             ]
         ];
 
