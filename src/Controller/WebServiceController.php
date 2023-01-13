@@ -46,13 +46,13 @@ class WebServiceController extends AbstractController
             ]
         ];
 
-        // Execute web service soap call
+        // TODO : Execute web service soap call
 
-        // Extract data from the response
+        // TODO : Extract data from the response
 
         return $this->render('transaction/' . $webServiceName . '/index.html.twig', [
             'controller_name' => 'WebServiceController',
-            // Pass data to Twig
+            // TODO : Pass data to Twig
         ]);
     }
 }
