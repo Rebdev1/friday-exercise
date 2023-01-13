@@ -28,8 +28,8 @@ class WebServiceController extends AbstractController
         // TODO : Extract data from the response
         $paramIn  = $webServiceResponse['PARAM_IN'];
         $paramOut = [
-            $webServiceResponse['PARAM_OUT1'],
-            $webServiceResponse['PARAM_OUT2'],
+            1 => $webServiceResponse['PARAM_OUT1'],
+            2 => $webServiceResponse['PARAM_OUT2'],
         ];
 
         return $this->render('transaction/' . $webServiceName . '/index.html.twig', [
