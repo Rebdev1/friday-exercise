@@ -47,10 +47,10 @@ class WebServiceController extends AbstractController
             ]
         ];
 
-        // Execute web service soap call
+        // TODO :Execute web service soap call
         $webServiceResponse = $webServiceEngine->run($webServiceName, $webServiceRequestParam);
 
-        // Extract data from the response
+        // TODO :Extract data from the response
         $paramIn = $webServiceResponse['PARAM_IN'];
         $paramOut = [
             1 => $webServiceResponse['PARAM_OUT1'],
@@ -59,7 +59,7 @@ class WebServiceController extends AbstractController
 
         return $this->render('transaction/' . $webServiceName . '/index.html.twig', [
             'controller_name' => 'WebServiceController',
-            // Pass data to Twig
+            // TODO :Pass data to Twig
             'param_in'        => $paramIn,
             'param_out'       => $paramOut,
         ]);
