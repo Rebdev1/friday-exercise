@@ -1,7 +1,91 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}WebService: ZWSLOC{% endblock %}
+{% block title %}
+  WebService: ZWSLOC
+{% endblock %}
 
 {% block body %}
+  {% if searchlocation_form %}
+    {# if the form is not null then display the form #}
+    {{ form(searchlocation_form) }}
+  {% else %}
+    {# since the form is null, now we should have a result #}
+    <h1>
+      Display Site Locations
+    </h1>
+    <div class="py-3">
+      <h2>
+        Criteria:
+      </h2>
+      <div>
+        <table class="table table-sm">
+          <tbody>
+            {# For each parameter in param_in #}
+            {% for key, search_parameter in result_web_service.PARAM_IN %}
+              {# {{ dump(key, search_parameter) }} #}
+              {# TODO : if parameter is not empty #}
+              {% if search_parameter %}
+              <tr>
+                  <td>
+                    {% if key == 'I_STOFCY' %}
+                        Stock Site:
+                    {% elseif key is same as ('I_LOC') %}
+                        Location:
+                    {% endif %}  
+                  </td>
+                  <td>
+                    {{ search_parameter }}
+                  </td>
+              </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
+    <div>
+        <h2 class="pb-2">Search Results</h2>
+        {# TODO : Add the NB_LIG data from web service result #}
+        <p class="fs-2 text">There is {{ result_web_service.PARAM_OUT1.O_NBLIG }} elements returned by X3.</p>
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Location - O_LOC</th>
+                    <th scope="col">Location Type - O_LOCTYP</th>
+                    <th scope="col">Description - O_TYPDES</th>
+                    <th scope="col">Category - O_LOCCAT</th>
+                    <th scope="col">View Contents</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                {# TODO : for each location in web service result#}
+                {% for location in result_web_service.PARAM_OUT2|sort((a,b) => a.O_LOC <=> b.O_LOC) %}
+                    <tr>
+                        {# TODO : Extract data inside from location to fill the <table>#}
+                        <td>{{ location.O_LOC }}</td>
+                        <td>{{ location.O_LOCTYP }}</td>
+                        {# TODO : Let's be fancy and display 'emptry string' when the location.O_TYPDES is an empty string #}
+                        <td>
+                          {% if location.O_TYPDES is empty %}
+                            no description
+                          {% else %}
+                            {{ location.O_TYPDES }}
+                          {% endif %}
+                        </td>
+                        <td>{{ location.O_LOCCAT }}</td>
+                        <td><a href="{{ path('app_web_service_ZWSSTOCK', {'I_LOC':location.O_LOC, 'I_STOFCY':result_web_service.PARAM_IN.I_STOFCY}) }}" class="btn btn-info">ClickMe</a></td>
+
+                    </tr>
+                {# TODO : Do not forget your endfor tag #}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+  {% endif %}
 {% endblock %}
