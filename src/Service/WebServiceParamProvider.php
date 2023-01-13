@@ -25,8 +25,8 @@ class WebServiceParamProvider
         $this->x3SoapParams->set('password', 'rDWtd\tY3=Jey/hFbjpW');
 
         $this->x3SoapParams->set('lang', 'ENG');
-        $this->x3SoapParams->add('pool', 'SEEDSCAN');
-        $this->x3SoapParams->add('config', 'adxwss.optreturn=JSON&adxwss.beautify=true');
+        $this->x3SoapParams->set('pool', 'SEEDSCAN');
+        $this->x3SoapParams->set('config', 'adxwss.optreturn=JSON&adxwss.beautify=true');
     }
 
     /**
@@ -51,9 +51,9 @@ class WebServiceParamProvider
     public function getCallContext(): array
     {
         return [
-            'codeLang'      => $this->x3SoapParams['lang'],
-            'poolAlias'     => $this->x3SoapParams['pool'],
-            'requestConfig' => $this->x3SoapParams['config'],
+            'codeLang'      => $this->x3SoapParams->get('lang'),
+            'poolAlias'     => $this->x3SoapParams->get('pool'),
+            'requestConfig' => $this->x3SoapParams->get('config'),
         ];
     }
 }
