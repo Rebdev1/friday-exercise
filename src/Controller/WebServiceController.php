@@ -4,21 +4,22 @@ namespace App\Controller;
 
 use App\Service\WebServiceEngine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WebServiceController extends AbstractController
 {
     #[Route('/web/service/ZWSLOC', name: 'app_web_service_ZWSLOC')]
-    public function ZWSLOC(WebServiceEngine $webServiceEngine): Response
+    public function ZWSLOC(WebServiceEngine $webServiceEngine, Request $request): Response
     {
         // Extra step: override default I_STOFCY with query param if it does exist.
 
         $webServiceName         = 'ZWSLOC';
         $webServiceRequestParam = [
             'PARAM_IN' => [
-                'I_STOFCY' => 'FR011',
-                'I_LOC'    => ''
+                'I_STOFCY' => $request->query->get('I_STOFCY') ? $request->query->get('I_STOFCY') : 'FR011',
+                'I_LOC'    => $request->query->get('I_LOC') ? $request->query->get('I_LOC') : '',
             ]
         ];
 
@@ -59,7 +60,7 @@ class WebServiceController extends AbstractController
         $webServiceResponse = $webServiceEngine->run($webServiceName, $webServiceRequestParam);
 
         // TODO :Extract data from the response
-        $paramIn = $webServiceResponse['PARAM_IN'];
+        $paramIn  = $webServiceResponse['PARAM_IN'];
         $paramOut = [
             1 => $webServiceResponse['PARAM_OUT1'],
             2 => $webServiceResponse['PARAM_OUT2'],
