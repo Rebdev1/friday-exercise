@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\WebServiceEngine;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebServiceController extends AbstractController
 {
     #[Route('/web/service/ZWSLOC', name: 'app_web_service_ZWSLOC')]
-    public function ZWSLOC(): Response
+    public function ZWSLOC(WebServiceEngine $webServiceEngine): Response
     {
         // Extra step: override default I_STOFCY with query param if it does exist.
 
@@ -22,12 +23,20 @@ class WebServiceController extends AbstractController
         ];
 
         // TODO : Execute web service soap call
+        $webServiceResponse = $webServiceEngine->run($webServiceName, $webServiceRequestParam);
 
         // TODO : Extract data from the response
+        $paramIn  = $webServiceResponse['PARAM_IN'];
+        $paramOut = [
+            $webServiceResponse['PARAM_OUT1'],
+            $webServiceResponse['PARAM_OUT2'],
+        ];
 
         return $this->render('transaction/' . $webServiceName . '/index.html.twig', [
             'controller_name' => 'WebServiceController',
             // TODO : Pass data to Twig
+            'param_in'        => $paramIn,
+            'param_out'       => $paramOut,
         ]);
     }
 
