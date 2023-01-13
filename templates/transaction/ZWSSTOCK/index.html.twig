@@ -33,7 +33,7 @@
                     <th scope="col">O_ITMDES1</th>
                     <th scope="col">O_QTYPCU</th>
                     <th scope="col">O_LOTCREDAT</th>
-                    {#                    <th scope="col">Action</th>#}
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
 
@@ -44,6 +44,12 @@
                         <td>{{ location.O_ITMDES1 }}</td>
                         <td>{{ location.O_QTYPCU }}</td>
                         <td>{{ location.O_LOTCREDAT }}</td>
+                        <td><a href="{{
+                            path(
+                                'app_web_service_ZWSLOC',
+                                { 'I_STOFCY': param_in.I_STOFCY, 'I_LOC': param_in.I_LOC }
+                            )
+                            }}" class="btn btn-primary">See stock</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

@@ -33,7 +33,7 @@
                     <th scope="col">O_TYPDES</th>
                     <th scope="col">O_LOCCAT</th>
                     <th scope="col">O_LOC</th>
-{#                    <th scope="col">Action</th>#}
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
 
@@ -44,6 +44,12 @@
                         <td>{% if location.O_TYPDES  %}{{ location.O_TYPDES }}{% else %}empty string{% endif %}</td>
                         <td>{{ location.O_LOCCAT }}</td>
                         <td>{{ location.O_LOC }}</td>
+                        <td><a href="{{
+                            path(
+                                'app_web_service_ZWSSTOCK',
+                                { 'I_STOFCY': param_in.I_STOFCY, 'I_LOC': location.O_LOC }
+                            )
+                        }}" class="btn btn-primary">See stock</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
