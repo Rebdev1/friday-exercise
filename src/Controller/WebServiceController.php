@@ -41,7 +41,7 @@ class WebServiceController extends AbstractController
     }
 
     #[Route('/web/service/ZWSSTOCK', name: 'app_web_service_ZWSSTOCK')]
-    public function ZWSSTOCK(): Response
+    public function ZWSSTOCK(WebServiceEngine $webServiceEngine): Response
     {
         $queryLocalisation = ''; // TODO: Extract localisation from query parameter
 
@@ -55,13 +55,21 @@ class WebServiceController extends AbstractController
             ]
         ];
 
-        // TODO : Execute web service soap call
+        // TODO :Execute web service soap call
+        $webServiceResponse = $webServiceEngine->run($webServiceName, $webServiceRequestParam);
 
-        // TODO : Extract data from the response
+        // TODO :Extract data from the response
+        $paramIn = $webServiceResponse['PARAM_IN'];
+        $paramOut = [
+            1 => $webServiceResponse['PARAM_OUT1'],
+            2 => $webServiceResponse['PARAM_OUT2'],
+        ];
 
         return $this->render('transaction/' . $webServiceName . '/index.html.twig', [
             'controller_name' => 'WebServiceController',
-            // TODO : Pass data to Twig
+            // TODO :Pass data to Twig
+            'param_in'        => $paramIn,
+            'param_out'       => $paramOut,
         ]);
     }
 }
