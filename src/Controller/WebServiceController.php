@@ -35,15 +35,13 @@ class WebServiceController extends AbstractController
     #[Route('/web/service/ZWSSTOCK', name: 'app_web_service_ZWSSTOCK')]
     public function ZWSSTOCK(WebServiceEngine $webServiceEngine): Response
     {
-        $queryLocalisation = ''; // TODO: Extract localisation from query parameter
-
         $webServiceName         = 'ZWSSTOCK';
         $webServiceRequestParam = [
             "PARAM_IN" => [
-                "I_STOFCY" => "FR011",
-                "I_ITMREF" => "",
-                "I_LOT"    => "",
-                "I_LOC"    => $queryLocalisation
+                "I_STOFCY" => 'FR011',
+                "I_ITMREF" => '',
+                "I_LOT"    => '',
+                "I_LOC"    => ''
             ]
         ];
 
