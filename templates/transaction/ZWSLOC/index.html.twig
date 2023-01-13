@@ -3,5 +3,50 @@
 {% block title %}WebService: ZWSLOC{% endblock %}
 
 {% block body %}
+    <h1>Location:</h1>
 
+    <div class="py-3">
+        <h2>Input elements</h2>
+        <div>
+            <table class="table table-sm">
+                <tbody>
+                    {% for key, parameter in param_in %}
+                        <tr>
+                            {% if parameter %}
+                                <td>{{ key }}</td>
+                                <td>{{ parameter }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <h2 class="pb-2">Returned elements</h2>
+        <p class="fs-2 text">There is {{ param_out.1.O_NBLIG }} elements returned by X3.</p>
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">O_LOCTYP</th>
+                    <th scope="col">O_TYPDES</th>
+                    <th scope="col">O_LOCCAT</th>
+                    <th scope="col">O_LOC</th>
+{#                    <th scope="col">Action</th>#}
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                {% for location in param_out.2 %}
+                    <tr>
+                        <td>{{ location.O_LOCTYP }}</td>
+                        <td>{% if location.O_TYPDES  %}{{ location.O_TYPDES }}{% else %}empty string{% endif %}</td>
+                        <td>{{ location.O_LOCCAT }}</td>
+                        <td>{{ location.O_LOC }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
